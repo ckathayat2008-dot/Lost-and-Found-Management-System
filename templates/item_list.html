@@ -1,0 +1,200 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Items | Lost & Found</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/items.css' %}">
+</head>
+<body>
+
+    <nav>
+        <h2>Lost & Found</h2>
+        <div>
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'item_list' %}">All Items</a>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}">Dashboard</a>
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <main class="items-container">
+
+        <section class="items-heading">
+            <h1>Explore Lost & Found Items</h1>
+            <p>Search for belongings reported by our users.</p>
+        </section>
+
+        <!-- SEARCH AND FILTER FORM -->
+        <section class="filter-box">
+
+            <form method="GET" action="{% url 'item_list' %}">
+
+                <label for="search">Search items</label>
+                <input
+                    type="text"
+                    id="search"
+                    name="q"
+                    placeholder="Search by name, description or location..."
+                    value="{{ request.GET.q }}"
+                >
+
+                <div class="filter-row">
+
+                    <div>
+                        <label for="item_type">Item Type</label>
+                        <select name="type" id="item_type">
+                            <option value="">All Types</option>
+                            <option value="Lost"
+                                {% if request.GET.type == 'Lost' %}selected{% endif %}>
+                                Lost
+                            </option>
+                            <option value="Found"
+                                {% if request.GET.type == 'Found' %}selected{% endif %}>
+                                Found
+                            </option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="category">Category</label>
+                        <select name="category" id="category">
+                            <option value="">All Categories</option>
+
+                            <option value="Electronics"
+                                {% if request.GET.category == 'Electronics' %}selected{% endif %}>
+                                Electronics
+                            </option>
+
+                            <option value="Documents"
+                                {% if request.GET.category == 'Documents' %}selected{% endif %}>
+                                Documents
+                            </option>
+
+                            <option value="Clothing"
+                                {% if request.GET.category == 'Clothing' %}selected{% endif %}>
+                                Clothing
+                            </option>
+
+                            <option value="Bags"
+                                {% if request.GET.category == 'Bags' %}selected{% endif %}>
+                                Bags
+                            </option>
+
+                            <option value="Accessories"
+                                {% if request.GET.category == 'Accessories' %}selected{% endif %}>
+                                Accessories
+                            </option>
+
+                            <option value="Books"
+                                {% if request.GET.category == 'Books' %}selected{% endif %}>
+                                Books
+                            </option>
+
+                            <option value="Other"
+                                {% if request.GET.category == 'Other' %}selected{% endif %}>
+                                Other
+                            </option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <button type="submit">Search Items</button>
+                <a href="{% url 'item_list' %}" class="reset-btn">Reset Filters</a>
+
+            </form>
+
+        </section>
+
+        <!-- ITEMS -->
+        <section class="results-section">
+
+            <h2>Available Reports</h2>
+
+            {% if items %}
+
+                <div class="items-grid">
+
+                    {% for item in items %}
+
+                        <div class="item-card-new">
+
+                            <span class="item-type
+                                {% if item.item_type == 'Lost' %}
+                                    lost-label
+                                {% else %}
+                                    found-label
+                                {% endif %}">
+                                {{ item.item_type }}
+                            </span>
+
+                            <h3>{{ item.item_name }}</h3>
+
+                            <p>
+                                <strong>Category:</strong>
+                                {{ item.category }}
+                            </p>
+
+                            <p>
+                                <strong>Location:</strong>
+                                {{ item.location }}
+                            </p>
+
+                            <p>
+                                <strong>Date:</strong>
+                                {{ item.date_lost_found }}
+                            </p>
+
+                            <p class="item-description">
+                                {{ item.description|truncatewords:20 }}
+                            </p>
+
+                            <p>
+                                <strong>Status:</strong>
+                                {{ item.status }}
+                            </p>
+
+                            <a href="{% url 'item_detail' item.pk %}"
+                               class="details-btn">
+                                View Details
+                            </a>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="no-results">
+                    <h3>No Items Found</h3>
+                    <p>Try changing your search or filters.</p>
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+    <footer>
+        <h3>Lost & Found Management System</h3>
+        <p>Helping people reconnect with their belongings.</p>
+        <p>© 2026 Lost & Found. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,137 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Report {{ item_type }} Item</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            Lost & Found
+        </div>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/register/">Register</a>
+            <a href="/login/">Login</a>
+        </div>
+
+    </nav>
+
+
+    <section class="hero">
+
+        <h1>Report {{ item_type }} Item</h1>
+
+        <p>
+            Please provide the details of your
+            {{ item_type|lower }} item.
+        </p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <label>Item Name</label><br>
+            <input type="text"
+                   name="item_name"
+                   placeholder="Enter item name"
+                   required>
+
+            <br><br>
+
+
+            <label>Category</label><br>
+
+            <select name="category" required>
+
+                <option value="">Select Category</option>
+
+                {% for value, label in categories %}
+                    <option value="{{ value }}">
+                        {{ label }}
+                    </option>
+                {% endfor %}
+
+            </select>
+
+            <br><br>
+
+
+            <label>Description</label><br>
+
+            <textarea name="description"
+                      placeholder="Describe the item"
+                      rows="4"
+                      required></textarea>
+
+            <br><br>
+
+
+            <label>Location</label><br>
+
+            <input type="text"
+                   name="location"
+                   placeholder="Where was it lost or found?"
+                   required>
+
+            <br><br>
+
+
+            <label>Date Lost / Found</label><br>
+
+            <input type="date"
+                   name="date_lost_found"
+                   required>
+
+            <br><br>
+
+
+            <label>Contact Number</label><br>
+
+            <input type="tel"
+                   name="contact_number"
+                   placeholder="Enter contact number"
+                   maxlength="15"
+                   required>
+
+            <br><br>
+
+
+            <button type="submit" class="btn">
+                Submit Report
+            </button>
+
+        </form>
+
+    </section>
+
+
+    <footer class="footer">
+        <p>Lost & Found Management System</p>
+        <p>Helping people recover their belongings.</p>
+    </footer>
+
+</body>
+</html>

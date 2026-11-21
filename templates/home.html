@@ -1,0 +1,156 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lost & Found | Home</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+
+<body>
+
+    <!-- NAVIGATION BAR -->
+    <nav>
+        <h2>Lost & Found</h2>
+
+        <div>
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'item_list' %}">All Items</a>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}">Dashboard</a>
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+
+            <span class="hero-tag">WELCOME TO LOST & FOUND</span>
+
+            <h1>Lost Something? <br>
+                Let's Help You Find It!
+            </h1>
+
+            <p>
+                A simple platform to report lost belongings,
+                share found items and help people reconnect
+                with their valuable possessions.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="{% url 'item_list' %}" class="hero-btn primary">
+                    Search Items
+                </a>
+
+                {% if user.is_authenticated %}
+                    <a href="{% url 'report_lost' %}" class="hero-btn secondary">
+                        Report Lost Item
+                    </a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="hero-btn secondary">
+                        Report Lost Item
+                    </a>
+                {% endif %}
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ACTION SECTION -->
+    <section class="action-section">
+
+        <h2>What Would You Like To Do?</h2>
+
+        <p>Choose an option to get started.</p>
+
+        <div class="action-grid">
+
+            <div class="action-card">
+                <div class="action-icon">🔍</div>
+                <h3>Lost Something?</h3>
+                <p>
+                    Report an item that you have lost
+                    and help others identify it.
+                </p>
+
+                {% if user.is_authenticated %}
+                    <a href="{% url 'report_lost' %}">Report Lost Item</a>
+                {% else %}
+                    <a href="{% url 'login' %}">Login to Report</a>
+                {% endif %}
+            </div>
+
+            <div class="action-card">
+                <div class="action-icon">🎒</div>
+                <h3>Found Something?</h3>
+                <p>
+                    Share information about an item
+                    you have found.
+                </p>
+
+                {% if user.is_authenticated %}
+                    <a href="{% url 'report_found' %}">Report Found Item</a>
+                {% else %}
+                    <a href="{% url 'login' %}">Login to Report</a>
+                {% endif %}
+            </div>
+
+            <div class="action-card">
+                <div class="action-icon">📋</div>
+                <h3>Browse Items</h3>
+                <p>
+                    Explore reported lost and found
+                    items in one place.
+                </p>
+
+                <a href="{% url 'item_list' %}">View All Items</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section class="features-section">
+
+        <h2>Why Use Lost & Found?</h2>
+
+        <div class="features-grid">
+
+            <div>
+                <h3>Easy Reporting</h3>
+                <p>Report lost and found items through a simple form.</p>
+            </div>
+
+            <div>
+                <h3>Quick Search</h3>
+                <p>Search items by name, description and location.</p>
+            </div>
+
+            <div>
+                <h3>User Dashboard</h3>
+                <p>Manage and track your submitted reports.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <h3>Lost & Found Management System</h3>
+        <p>Helping people reconnect with their belongings.</p>
+        <p>© 2026 Lost & Found. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Item - Lost & Found</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="logo">Lost & Found</div>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/dashboard/">Dashboard</a>
+    </div>
+</nav>
+
+<section class="hero">
+
+    <h1>Confirm Delete</h1>
+
+    <p>Are you sure you want to delete this report?</p>
+
+    <h2>{{ item.item_name }}</h2>
+
+    <p>Type: {{ item.item_type }}</p>
+
+    <p>Location: {{ item.location }}</p>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <button type="submit" class="btn"
+                style="background-color:#c0392b;">
+            Yes, Delete Item
+        </button>
+
+        <a href="{% url 'dashboard' %}" class="btn">
+            Cancel
+        </a>
+    </form>
+
+</section>
+
+<footer class="footer">
+    <p>Lost & Found Management System</p>
+</footer>
+
+</body>
+</html>

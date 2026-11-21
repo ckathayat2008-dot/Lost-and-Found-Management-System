@@ -1,0 +1,130 @@
+
+.items-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+}
+
+.items-heading {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.items-heading h1 {
+    font-size: 34px;
+}
+
+.items-heading p {
+    color: #667788;
+}
+
+.filter-box {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    margin-bottom: 35px;
+}
+
+.filter-box label {
+    display: block;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.filter-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.reset-btn {
+    display: inline-block;
+    padding: 11px 18px;
+    color: #176b87;
+    text-decoration: none;
+    border: 1px solid #176b87;
+    border-radius: 6px;
+    margin: 5px;
+}
+
+.results-section h2 {
+    margin-bottom: 20px;
+}
+
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 22px;
+}
+
+.item-card-new {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+}
+
+.item-card-new h3 {
+    margin-top: 15px;
+    font-size: 22px;
+}
+
+.item-card-new p {
+    margin: 10px 0;
+    color: #52616d;
+}
+
+.item-type {
+    display: inline-block;
+    padding: 5px 13px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.lost-label {
+    background: #ffe4e4;
+    color: #b42318;
+}
+
+.found-label {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.item-description {
+    min-height: 45px;
+}
+
+.details-btn {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 10px 18px;
+    background: #176b87;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.details-btn:hover {
+    background: #10465c;
+}
+
+.no-results {
+    text-align: center;
+    padding: 45px 20px;
+    background: white;
+    border-radius: 12px;
+}
+
+@media (max-width: 600px) {
+    .filter-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .items-heading h1 {
+        font-size: 27px;
+    }
+}

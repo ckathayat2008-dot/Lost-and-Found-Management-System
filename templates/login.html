@@ -1,0 +1,55 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Lost & Found</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <section class="hero">
+
+        <h1>Welcome Back!</h1>
+        <p>Login to your Lost & Found account.</p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <input type="text"
+                   name="username"
+                   placeholder="Enter Username"
+                   required>
+
+            <br><br>
+
+            <input type="password"
+                   name="password"
+                   placeholder="Enter Password"
+                   required>
+
+            <br><br>
+
+            <button type="submit" class="btn">
+                Login
+            </button>
+
+        </form>
+
+        <p>Don't have an account?
+            <a href="/register/">Register here</a>
+        </p>
+
+    </section>
+
+</body>
+</html>

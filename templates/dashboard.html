@@ -1,0 +1,169 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard | Lost & Found</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <h2>Lost & Found</h2>
+
+        <div>
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'item_list' %}">All Items</a>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+
+            <form method="POST" action="{% url 'logout' %}" class="logout-form">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    </nav>
+
+    <main class="dashboard-container">
+
+        <!-- WELCOME -->
+        <section class="dashboard-welcome">
+            <div>
+                <h1>Welcome, {{ request.user.username }}!</h1>
+                <p>Manage all your lost and found reports in one place.</p>
+            </div>
+
+            <div class="welcome-buttons">
+                <a href="{% url 'report_lost' %}" class="lost-button">
+                    + Report Lost Item
+                </a>
+
+                <a href="{% url 'report_found' %}" class="found-button">
+                    + Report Found Item
+                </a>
+            </div>
+        </section>
+
+        <!-- STATISTICS -->
+        <section class="dashboard-stats">
+
+            <div class="dashboard-stat">
+                <span>Total Reports</span>
+                <h2>{{ total_items }}</h2>
+                <p>All your reports</p>
+            </div>
+
+            <div class="dashboard-stat">
+                <span>Lost Items</span>
+                <h2>{{ lost_count }}</h2>
+                <p>Items reported lost</p>
+            </div>
+
+            <div class="dashboard-stat">
+                <span>Found Items</span>
+                <h2>{{ found_count }}</h2>
+                <p>Items reported found</p>
+            </div>
+
+        </section>
+
+        <!-- REPORT TABLE -->
+        <section class="reports-section">
+
+            <div class="reports-heading">
+                <h2>My Reports</h2>
+                <a href="{% url 'item_list' %}">Browse All Items →</a>
+            </div>
+
+            {% if my_items %}
+
+                <div class="report-list">
+
+                    {% for item in my_items %}
+
+                        <div class="report-card">
+
+                            <div class="report-info">
+
+                                <span class="report-type
+                                    {% if item.item_type == 'Lost' %}
+                                        lost-label
+                                    {% else %}
+                                        found-label
+                                    {% endif %}">
+                                    {{ item.item_type }}
+                                </span>
+
+                                <h3>{{ item.item_name }}</h3>
+
+                                <p>
+                                    Category: {{ item.category }}
+                                </p>
+
+                                <p>
+                                    Location: {{ item.location }}
+                                </p>
+
+                                <p>
+                                    Status: <strong>{{ item.status }}</strong>
+                                </p>
+
+                            </div>
+
+                            <div class="report-actions">
+
+                                <a href="{% url 'item_detail' item.id %}"
+                                   class="view-action">
+                                    View
+                                </a>
+
+                                <a href="{% url 'edit_item' item.id %}"
+                                   class="edit-action">
+                                    Edit
+                                </a>
+
+                                <a href="{% url 'delete_item' item.id %}"
+                                   class="delete-action">
+                                    Delete
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="empty-dashboard">
+                    <h3>No Reports Yet</h3>
+                    <p>You haven't submitted any lost or found reports.</p>
+
+                    <a href="{% url 'report_lost' %}">
+                        Create Your First Report
+                    </a>
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <h3>Lost & Found Management System</h3>
+        <p>Helping people reconnect with their belongings.</p>
+        <p>© 2026 Lost & Found. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>

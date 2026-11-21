@@ -1,0 +1,119 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ item.item_name }} | Lost & Found</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/detail.css' %}">
+</head>
+
+<body>
+
+    <nav>
+        <h2>Lost & Found</h2>
+
+        <div>
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'item_list' %}">All Items</a>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}">Dashboard</a>
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <main class="detail-container">
+
+        <a href="{% url 'item_list' %}" class="back-link">
+            ← Back to All Items
+        </a>
+
+        <div class="detail-card">
+
+            <div class="detail-heading">
+                <span class="{% if item.item_type == 'Lost' %}lost-label{% else %}found-label{% endif %}">
+                    {{ item.item_type }} Item
+                </span>
+
+                <span class="status-label">
+                    {{ item.status }}
+                </span>
+            </div>
+
+            <h1>{{ item.item_name }}</h1>
+
+            <p class="detail-description">
+                {{ item.description }}
+            </p>
+
+            <hr>
+
+            <h2>Item Information</h2>
+
+            <div class="detail-grid">
+
+                <div class="detail-field">
+                    <strong>Category</strong>
+                    <p>{{ item.category }}</p>
+                </div>
+
+                <div class="detail-field">
+                    <strong>Location</strong>
+                    <p>{{ item.location }}</p>
+                </div>
+
+                <div class="detail-field">
+                    <strong>Date Lost / Found</strong>
+                    <p>{{ item.date_lost_found }}</p>
+                </div>
+
+                <div class="detail-field">
+                    <strong>Report Created</strong>
+                    <p>{{ item.created_at|date:"d M Y" }}</p>
+                </div>
+
+            </div>
+
+            <hr>
+
+            <h2>Contact Information</h2>
+
+            {% if user.is_authenticated %}
+
+                <div class="contact-box">
+                    <strong>Contact Number</strong>
+                    <p>{{ item.contact_number }}</p>
+                </div>
+
+            {% else %}
+
+                <div class="login-notice">
+                    <p>Please log in to view the reporter's contact number.</p>
+                    <a href="{% url 'login' %}" class="detail-button">
+                        Login to View Contact
+                    </a>
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </main>
+
+    <footer>
+        <h3>Lost & Found Management System</h3>
+        <p>Helping people reconnect with their belongings.</p>
+        <p>© 2026 Lost & Found. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
